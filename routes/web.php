@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TvController;
 use App\Http\Controllers\ActorsController;
@@ -23,9 +24,7 @@ use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 
 
-Route::get('/main', function () {
-    return view('main');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/',[Controller::class,'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -35,23 +34,23 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__.'/auth.php';
 
-Route::group(['prefix' => LaravelLocalization::setLocale()], function()
-{
-	/** ADD ALL LOCALIZED ROUTES INSIDE THIS GROUP **/
-	Route::get('/hello', function()
-	{
-		return View::make('hello');
-	});
+// Route::group(['prefix' => LaravelLocalization::setLocale()], function()
+// {
+// 	/** ADD ALL LOCALIZED ROUTES INSIDE THIS GROUP **/
+// 	Route::get('/hello', function()
+// 	{
+// 		return View::make('hello');
+// 	});
 
-	Route::get('test',function(){
-		return View::make('test');
-	});
+// 	Route::get('test',function(){
+// 		return View::make('test');
+// 	});
 
-	Route::get('/', function () {
-		return view('main');
-	})->middleware('auth');
+// 	Route::get('/', function () {
+// 		return view('main');
+// 	})->middleware('auth');
     
-});
+// });
 
 Route::group(['prefix' => 'college'], function()
 {
@@ -66,5 +65,3 @@ Route::group(['prefix' => 'college'], function()
 	Route::post('/addstudent', [StudentController::class,'store'])->name('addstudent');
 	
 });
-
-
